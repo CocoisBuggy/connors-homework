@@ -1,3 +1,4 @@
+import random
 import string
 import time
 
@@ -9,6 +10,10 @@ class_names = {
     74: "Second Class (Division 2)",
     100: "First Class",
 }
+
+
+class StudentCheating(Exception):
+    pass
 
 
 def take_input(msg, dtype):
@@ -25,8 +30,11 @@ def take_input(msg, dtype):
 
 
 def get_grade(grade: int):
+    if grade > 100:
+        raise StudentCheating
+
     for thresh in thresholds:
-        if grade >= thresh:
+        if grade > thresh:
             continue
         else:
             return class_names[thresh]
@@ -38,7 +46,6 @@ if __name__ == "__main__":
     if class_name == "Fail":
         print("you failed!")
         while True:
-            print("😳", end="")
-            time.sleep(0.5)
+            print("".join(["😳" for _ in range(random.randint(1, 12))]), end=" ")
     else:
         print("You are in: ", class_name, "😻😻😻")
